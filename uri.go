@@ -2,8 +2,8 @@ package goutils
 
 import (
 	log "github.com/sirupsen/logrus"
+	"net/url"
 	"regexp"
-	"strings"
 )
 
 var (
@@ -15,13 +15,13 @@ type URL struct {
 	Host   string
 	Path   string
 	Hash   string
-	Query  map[string]string
+	Query  url.Values
 }
 
 // ParseURL parses URL to parts
-func ParseURL(url string) *URL {
-	res := URL{Query: make(map[string]string)}
-	match := urlPattern.FindStringSubmatch(url)
+func ParseURL(urlStr string) *URL {
+	res := URL{}
+	match := urlPattern.FindStringSubmatch(urlStr)
 
 	for i, name := range urlPattern.SubexpNames() {
 		if i != 0 && name != "" {
@@ -35,19 +35,26 @@ func ParseURL(url string) *URL {
 			case "hash":
 				res.Hash = match[i]
 			case "query":
-				if len(match[i]) == 0 {
+				var err error
+				res.Query, err = url.ParseQuery(match[i])
+				if err != nil {
 					continue
 				}
-				// TODO: support query arrays
-				pairs := strings.Split(match[i], "&")
-				for i := range pairs {
-					kv := strings.Split(pairs[i], "=")
-					if len(kv) != 2 {
-						log.Warnf("kv len is not 2: %#v", kv)
-						continue
-					}
-					res.Query[kv[0]] = kv[1]
-				}
+
+				//if len(match[i]) == 0 {
+				//	continue
+				//}
+				//
+				//// TODO: support query arrays
+				//pairs := strings.Split(match[i], "&")
+				//for i := range pairs {
+				//	kv := strings.Split(pairs[i], "=")
+				//	if len(kv) != 2 {
+				//		log.Warnf("kv len is not 2: %#v", kv)
+				//		continue
+				//	}
+				//	res.Query[kv[0]] = kv[1]
+				//}
 			default:
 				log.Warn("unknown name: ", name)
 			}
