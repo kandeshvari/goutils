@@ -15,7 +15,7 @@ type DSN struct {
 }
 
 var (
-	dsnPattern = regexp.MustCompile(`^(?P<proto>\w+):\/\/?((?P<username>\w+)?(:(?P<password>[^@]+))*@)*(?P<host>[[a-zA-Z0-9_.-]*[a-zA-Z]+|[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})?(:(?P<port>[0-9]+))*\/?(?P<db_name>([\w\d]+)+)(\?(?P<opts>[\w\d]+=[\w\d]+(\&[\w\d]+=[\w\d]+)*)*)*$`)
+	dsnPattern = regexp.MustCompile(`^(?P<proto>\w+):\/\/?((?P<username>\w+)?(:(?P<password>[^@]+))*@)*(?P<host>[[a-zA-Z0-9_.-]*[a-zA-Z]+|[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})?(:(?P<port>[0-9]+))*\/?(?P<db_name>([\w\d]+)*)(\?(?P<opts>[\w\d]+=[\w\d]+(\&[\w\d]+=[\w\d]+)*)*)*$`)
 )
 
 func StrPtrEmptyNil(str string) *string {

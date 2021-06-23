@@ -7,11 +7,23 @@ import (
 
 var dsnSuit = [][]interface{}{
 	{
-		"postgres://user:password@localhost:15432/app_dev_db?sslmode=disable&opt=2&x=d",
+		"clickhouse://user_name:pas-!#$%^&*()_+=sword@clickhouse:9000?database=dev_db",
+		&DSN{
+			Protocol: "clickhouse",
+			User:     StrPtrEmptyNil("user_name"),
+			Password: StrPtrEmptyNil("pas-!#$%^&*()_+=sword"),
+			Host:     "clickhouse",
+			Port:     StrPtrEmptyNil("9000"),
+			DbName:   "",
+			Opts:     StrPtrEmptyNil("database=dev_db"),
+		},
+	},
+	{
+		"postgres://user_name:pas!#$%^&*()_+=sword@localhost:15432/app_dev_db?sslmode=disable&opt=2&x=d",
 		&DSN{
 			Protocol: "postgres",
-			User:     StrPtrEmptyNil("user"),
-			Password: StrPtrEmptyNil("password"),
+			User:     StrPtrEmptyNil("user_name"),
+			Password: StrPtrEmptyNil("pas!#$%^&*()_+=sword"),
 			Host:     "localhost",
 			Port:     StrPtrEmptyNil("15432"),
 			DbName:   "app_dev_db",
@@ -19,10 +31,10 @@ var dsnSuit = [][]interface{}{
 		},
 	},
 	{
-		"postgres://user@localhost:15432/app_dev_db?sslmode=disable&opt=2&x=d",
+		"postgres://user_name@localhost:15432/app_dev_db?sslmode=disable&opt=2&x=d",
 		&DSN{
 			Protocol: "postgres",
-			User:     StrPtrEmptyNil("user"),
+			User:     StrPtrEmptyNil("user_name"),
 			Password: nil,
 			Host:     "localhost",
 			Port:     StrPtrEmptyNil("15432"),
